@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body{
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+.payment-container {
+  padding: 20px;
+  
+}
+.payment-card{
+  background: radial-gradient(77.49% 105.92% at 77.49% 26.55%, #90C626 0%, #20934A 100%);
+}
+
+.payment-header{
+  background: #042526 !important;
+    border-bottom: 1px solid #0F5357 !important;
+    color: #c5d82e !important;
+  padding: 10px;
+}
+.upi-select{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.my-input{
+  border: 2px solid black !important ;
+  padding: 15px;
+}
+.payment-card {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-timer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.payment-timer span {
+  margin-left: 10px;
+  font-weight: bold;
+  color: #ff4d4d;
+}
+
+.payment-option {
+  margin-top: 15px;
+}
+
+.payment-option label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.upi-display {
+  border: 2px solid #ccc;
+  background: radial-gradient(77.49% 105.92% at 77.49% 26.55%, #90C626 0%, #20934A 100%);
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  margin-top: 10px;
+}
+.cardNumber-Container{
+  background: radial-gradient(77.49% 105.92% at 77.49% 26.55%, #90C626 0%, #20934A 100%);
+  color: black !important;
+}
+
+.upi_container {
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+}
+
+.qr-image {
+  max-width: 100%;   
+  max-height: 300px;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.payment-input {
+  width: 300px;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+.payment-input input,
+.payment-input select,
+.form-control {
+  border: 2px solid #d9d9d9;
+  
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+.cardPay{
+  width: 200px;
+  padding: 15px !important;
+  font-size: 1rem;
+  font-family: poppins;
+}
+
+.payment-input input:valid,
+.payment-input select:valid{
+  border: none !important;
+}
+.form-control:valid {
+  border-color: #7dd87d !important;
+}
+
+.payment-input input:focus,
+.payment-input select:focus{
+  border: none;
+}
+.cardDetailsContainer{
+  display: flex;
+  width: 300px;
+  gap: 25px;
+}
+.form-control:focus {
+  border-color: #7dd87d;
+  box-shadow: none;
+}
+button.btn-primary {
+  background: #042526 !important; 
+  border: none !important;
+  color: #fff !important;
+  padding: 8px 10px;
+  border-radius: 3px;
+}
+.enterUpi{
+  position: relative;
+  border: none !important;
+}
+.verify-text{
+  position: absolute;
+  color: blue;
+  font-family: 500;
+}
+.verify_status{
+  color: blue;
+  font-weight: 600;
+}
+.payment-alert {
+  margin-top: 20px;
+}
+.scanner-Container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.scanLine{
+  rotate: 90deg;
+  color: black;
+}
+.scanHere{
+  color: black;
+  padding: 10px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+@media (max-width: 768px) {
+  .payment-card {
+    padding: 15px;
+  }
+}
