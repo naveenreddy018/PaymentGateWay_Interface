@@ -1,44 +1,49 @@
 
+// NetBankingForm.jsx
 import React from 'react';
-import { Form } from 'react-bootstrap';
-import './netBanking.css';
-import assests from '../../assets/assets';
+import { Form, Button, Alert } from 'react-bootstrap';
+import PopularBanks from '../popularBanks/PopularBanks';
 
-
-
-const BANKS = [
-  { id: 'SBI',   label: 'State Bank of India',        icon: assests.unionBankIcon },
-  { id: 'HDFC',  label: 'HDFC Bank',                   icon: assests.unionBankIcon},
-  { id: 'ICICI', label: 'ICICI Bank',                  icon: assests.unionBankIcon},
-  { id: 'KOTAK', label: 'Kotak Mahindra Bank',         icon: assests.unionBankIcon},
-  { id: 'AXIS',  label: 'Axis Bank',                   icon: assests.unionBankIcon},
-  { id: 'FED',   label: 'Federal Bank',                icon: assests.unionBankIcon},
-  { id: 'IOB',   label: 'Indian Overseas Bank',        icon: assests.unionBankIcon},
-  { id: 'IB',    label: 'Indian Bank',                 icon: assests.unionBankIcon},
-];
-
-export default function PopularBanks({ selectedBank, onChange }) {
+const NetBankingForm = ({ bank, setBank, handlePayment }) => {
   return (
-    <div className="popular-banks-wrapper">
-      <h5 className="mb-3">Popular Banks</h5>
-      <Form>
-        <div className="popular-banks-grid">
-          {BANKS.map(bank => (
-            <Form.Check key={bank.id} type="radio" id={bank.id} className="bank-option">
-              <Form.Check.Input
-                name="bank"
-                type="radio"
-                checked={selectedBank === bank.id}
-                onChange={() => onChange(bank.id)}
-              />
-              <Form.Check.Label htmlFor={bank.id}>
-                <img src={bank.icon} alt={bank.label} className="bank-icon" />
-                <span className="bank-label">{bank.label}</span>
-              </Form.Check.Label>
-            </Form.Check>
-          ))}
-        </div>
-      </Form>
+    <div>
+      <PopularBanks selectedBank={bank} onChange={setBank} />
+      
+      <Form.Group className="mb-3">
+        <Form.Select 
+          value={bank}
+          onChange={(e) => setBank(e.target.value)}
+        >
+          <option value="">Select Bank</option>
+          <option value="HDFC">HDFC</option>
+          <option value="SBI">SBI</option>
+          <option value="ICICI">ICICI</option>
+          <option value="Axis Bank">Axis Bank</option>
+          <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+          <option value="Punjab National Bank">Punjab National Bank</option>
+          <option value="Bank of Baroda">Bank of Baroda</option>
+          <option value="Indian Bank">Indian Bank</option>
+          <option value="Bank of India">Bank of India</option>
+          <option value="Canara Bank">Canara Bank</option>
+          <option value="Union Bank of India">Union Bank of India</option>
+          <option value="UCO Bank">UCO Bank</option>
+        </Form.Select>
+      </Form.Group>
+      
+      <Alert variant="warning" className="mt-3">
+        This instrument has low success, use UPI or cards for better experience
+      </Alert>
+      
+      <div className="d-grid gap-2 col-md-6 mx-auto mt-4">
+        <Button 
+          variant="success"
+          onClick={handlePayment}
+        >
+          Pay Now
+        </Button>
+      </div>
     </div>
   );
-}
+};
+
+export default NetBankingForm;

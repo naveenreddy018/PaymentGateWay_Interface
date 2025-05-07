@@ -1,10 +1,10 @@
 import React from 'react'
-import PaymentOptions from './components/PaymentInterface'
+import JaisvikPaymentGateway from './components/jaisvikPaymentGateway/jaisvikPaymentGateWay'
 
 function App() {
   return (
     <div>
-      <PaymentOptions />
+      <JaisvikPaymentGateway />
     </div>
   )
 }

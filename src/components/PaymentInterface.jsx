@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, TextField, InputAdornment } from '@mui/material';
+import { Grid, TextField, MenuItem, InputAdornment, FormControl, InputLabel, Select, } from '@mui/material';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGooglePay } from "@fortawesome/free-brands-svg-icons";
 import Button from 'react-bootstrap/Button';
@@ -8,7 +8,6 @@ import {
   Container,
   Card,
   Form,
-
   Col,
   Row,
   Alert,
@@ -24,6 +23,7 @@ const PaymentOptions = () => {
   const [cardDetails, setCardDetails] = useState({ number: '', expiry: '', cvv: '' });
   const [message, setMessage] = useState('');
   const [userUpi, setuserUpi] = useState('')
+  const [selectedYear, setSelectedYear] = useState('');
 
 
 
@@ -43,6 +43,16 @@ const PaymentOptions = () => {
         return;
     }
   };
+
+
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
+  const years = [];
+  for (let i = 2001; i <= 2080; i++) {
+    years.push(i);
+  }
 
   return (
     <Container className="payment-container">
@@ -92,7 +102,7 @@ const PaymentOptions = () => {
                                 position="end"
                                 className='verify_status'
                                 style={{ cursor: 'pointer', userSelect: 'none' }}
-                                onClick={() => { /* handleVerify() */ }}
+                                // onClick={() => { /* handleVerify() */ }}
                               >
                                 <span style={{ color: '#042526', fontWeight: 500 }}>
                                   Verify
@@ -159,13 +169,22 @@ const PaymentOptions = () => {
                   <div className='cardDetailsContainer'>
                     <Grid className="enterUpi" container spacing={2}>
                       <Grid item xs={6} sm={3}>
-                        <TextField
-                          fullWidth
-                          variant="outlined"
-                          label="MM/YY"
-                          id="upi-input"
-                        />
-
+                        <FormControl fullWidth variant="outlined">
+                          <InputLabel className='select_year' id="year-select-label">Year</InputLabel>
+                          <Select
+                            labelId="year-select-label"
+                            id="year-select"
+                            value={selectedYear}
+                            onChange={handleYearChange}
+                            label="Year"
+                          >
+                            {years.map((year) => (
+                              <MenuItem key={year} value={year}>
+                                {year}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
                       </Grid>
                     </Grid>
 
