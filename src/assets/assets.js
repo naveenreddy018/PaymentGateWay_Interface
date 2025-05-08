@@ -10,6 +10,13 @@ import Indian_Overseas_Bank from"./Indian_Overseas_Bank.jpeg"
 import creditCardIcon from "./visa.webp"
 import masterCardIcon from "./masterCard.webp"
 import sbiIcon from "./Sbi.png"
+import jaimaxLogo from "./jaimaxLogo.svg"
+import jaimaxMainlogo  from "./jaimaxMainlogo.png"
+import  acceptCards from "./acceptCards.jpg"
+import jaisvikPayLogo from "./jaisvikpay.png"
+import upiIcon from "./upi.jpg"
+import cardspayment from "./cardspayments.jpg"
+import netBanking from "./allbank.png"
 
 
 const assests = {
@@ -23,7 +30,14 @@ const assests = {
   Federal_BankIcon,
   creditCardIcon,
   masterCardIcon,
-  sbiIcon
+  sbiIcon,
+  jaimaxLogo,
+  jaimaxMainlogo,
+  acceptCards,
+  jaisvikPayLogo,
+  upiIcon,
+  cardspayment,
+  netBanking
 }
 
 

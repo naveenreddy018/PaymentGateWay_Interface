@@ -1,7 +1,7 @@
-// CreditCardForm.jsx
-import React from 'react';
-import { Form, Row, Col, Button, Image } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Row, Col, Button, Image, Alert } from 'react-bootstrap';
 import assests from '../../assets/assets';
+
 const CreditCardForm = ({ 
   cardDetails, 
   setCardDetails, 
@@ -11,65 +11,126 @@ const CreditCardForm = ({
   setSelectedYear, 
   handlePayment 
 }) => {
+  const [errors, setErrors] = useState({});
+
+  const isValidCardNumber = (number) => {
+    const sanitized = number.replace(/\s+/g, '');
+    let sum = 0;
+    let shouldDouble = false;
+
+    for (let i = sanitized.length - 1; i >= 0; i--) {
+      let digit = parseInt(sanitized.charAt(i));
+      if (shouldDouble) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      sum += digit;
+      shouldDouble = !shouldDouble;
+    }
+    return sum % 10 === 0;
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!cardDetails.number || cardDetails.number.length < 13 || !isValidCardNumber(cardDetails.number)) {
+      newErrors.number = 'Invalid card number';
+    }
+
+    if (!cardDetails.name || cardDetails.name.length < 3) {
+      newErrors.name = 'Enter a valid name';
+    }
+
+    if (!cardDetails.cvv || !/^\d{3}$/.test(cardDetails.cvv)) {
+      newErrors.cvv = 'Invalid CVV';
+    }
+
+    if (!selectedMonth || !selectedYear) {
+      newErrors.expiry = 'Select valid expiry date';
+    } else {
+      const expDate = new Date(`${selectedYear}-${selectedMonth}-01`);
+      const now = new Date();
+      expDate.setMonth(expDate.getMonth() + 1); // end of month
+      if (expDate < now) {
+        newErrors.expiry = 'Card has expired';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const onSubmit = () => {
+    if (validateForm()) {
+      handlePayment();
+    }
+  };
+
   return (
     <Form>
       <Form.Group as={Row} className="mb-3">
         <Form.Label column sm={3}>Card Type</Form.Label>
         <Col sm={9} className="d-flex align-items-center">
-          <Image 
-            src={assests.creditCardIcon} 
-            alt="Visa" 
-            width="50px"
-            className="me-2" 
-          />
-          <Image 
-            src={assests.masterCardIcon} 
-            alt="Mastercard"
-            width="50px" 
-          />
+          <Image src={assests.creditCardIcon} alt="Visa" width="50px" className="me-2" />
+          <Image src={assests.masterCardIcon} alt="Mastercard" width="50px" />
         </Col>
       </Form.Group>
-      
+
       <Form.Group as={Row} className="mb-3">
         <Form.Label column sm={3}>Card Number</Form.Label>
         <Col sm={9}>
           <Form.Control 
-            type="text" 
-            placeholder="XXXX XXXX XXXX XXXX" 
+            type="text"
+            inputMode="numeric"
+            maxLength={16}
+            placeholder="XXXX XXXX XXXX XXXX"
             value={cardDetails.number}
-            onChange={(e) => setCardDetails({...cardDetails, number: e.target.value})}
+            onChange={(e) => {
+              const val = e.target.value.replace(/\D/g, ''); // Keep only digits
+              setCardDetails({ ...cardDetails, number: val });
+            }}
+            isInvalid={!!errors.number}
           />
+          <Form.Control.Feedback type="invalid">{errors.number}</Form.Control.Feedback>
         </Col>
       </Form.Group>
-      
+
       <Form.Group as={Row} className="mb-3">
         <Form.Label column sm={3}>Name on Card</Form.Label>
         <Col sm={9}>
           <Form.Control 
-            type="text" 
-            placeholder="Enter name as on card" 
+            type="text"
+            placeholder="Enter name as on card"
             value={cardDetails.name}
-            onChange={(e) => setCardDetails({...cardDetails, name: e.target.value})}
+            onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
+            isInvalid={!!errors.name}
           />
+          <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
         </Col>
       </Form.Group>
-      
+
       <Form.Group as={Row} className="mb-3">
         <Form.Label column sm={3}>CVV Number</Form.Label>
         <Col sm={9} className="d-flex align-items-center">
           <Form.Control 
-            type="text" 
-            placeholder="XXX" 
-            maxLength="3"
+            type="text"
+            inputMode="numeric"
+            maxLength={3}
+            placeholder="XXX"
             className="me-2"
             style={{ width: '100px' }}
             value={cardDetails.cvv}
-            onChange={(e) => setCardDetails({...cardDetails, cvv: e.target.value})}
+            onChange={(e) => {
+              const val = e.target.value.replace(/\D/g, '');
+              setCardDetails({ ...cardDetails, cvv: val });
+            }}
+            isInvalid={!!errors.cvv}
           />
-          <small className="text-muted">What is CVV number?</small>
+          <Form.Control.Feedback type="invalid">{errors.cvv}</Form.Control.Feedback>
+          <small className="text-muted ms-2">What is CVV number?</small>
         </Col>
       </Form.Group>
-      
+
       <Form.Group as={Row} className="mb-3">
         <Form.Label column sm={3}>Expiry Date</Form.Label>
         <Col sm={9} className="d-flex">
@@ -78,34 +139,37 @@ const CreditCardForm = ({
             style={{ width: '120px' }}
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
+            isInvalid={!!errors.expiry}
           >
             <option value="">Month</option>
             {Array.from({ length: 12 }, (_, i) => (
-              <option key={i+1} value={i+1}>
-                {i + 1}
-              </option>
+              <option key={i + 1} value={i + 1}>{i + 1}</option>
             ))}
           </Form.Select>
           <Form.Select 
             style={{ width: '120px' }}
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
+            isInvalid={!!errors.expiry}
           >
             <option value="">Year</option>
-            {Array.from({ length: 10 }, (_, i) => (
-              <option key={i} value={new Date().getFullYear() + i}>
-                {new Date().getFullYear() + i}
-              </option>
-            ))}
+            {Array.from({ length: 10 }, (_, i) => {
+              const year = new Date().getFullYear() + i;
+              return <option key={year} value={year}>{year}</option>;
+            })}
           </Form.Select>
+          <Form.Control.Feedback type="invalid">{errors.expiry}</Form.Control.Feedback>
         </Col>
       </Form.Group>
-      
+
+      {Object.keys(errors).length > 0 && (
+        <Alert variant="danger" className="text-center">
+          Please correct the above errors before proceeding.
+        </Alert>
+      )}
+
       <div className="d-grid gap-2 col-md-6 mx-auto mt-4">
-        <Button 
-          variant="success"
-          onClick={handlePayment}
-        >
+        <Button variant="success" onClick={onSubmit}>
           Pay Now
         </Button>
       </div>
