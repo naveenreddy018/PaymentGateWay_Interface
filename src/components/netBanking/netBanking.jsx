@@ -30,10 +30,10 @@ const NetBankingForm = ({ bank, setBank, handlePayment }) => {
         </Form.Select>
       </Form.Group>
       
-      <Alert variant="warning" className="mt-3">
+      {/* <Alert variant="warning" className="mt-3">
         This instrument has low success, use UPI or cards for better experience
       </Alert>
-      
+       */}
       <div className="d-grid gap-2 col-md-6 mx-auto mt-4">
         <Button 
           variant="success"

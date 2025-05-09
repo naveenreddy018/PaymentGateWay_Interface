@@ -12,6 +12,9 @@ const CreditCardForm = ({
   handlePayment 
 }) => {
   const [errors, setErrors] = useState({});
+  const [cardNumber,setCardNumber] = useState("")
+  // const [cardType,setCardType] = useState("")
+
 
   const isValidCardNumber = (number) => {
     const sanitized = number.replace(/\s+/g, '');
@@ -32,26 +35,29 @@ const CreditCardForm = ({
 
   const validateForm = () => {
     const newErrors = {};
+    const sanitizedNumber = cardDetails.number.replace(/\s+/g, '');
 
-    if (!cardDetails.number || cardDetails.number.length < 13 || !isValidCardNumber(cardDetails.number)) {
+    if (!sanitizedNumber || sanitizedNumber.length < 13 || !isValidCardNumber(sanitizedNumber)) {
       newErrors.number = 'Invalid card number';
     }
 
-    if (!cardDetails.name || cardDetails.name.length < 3) {
-      newErrors.name = 'Enter a valid name';
+    if (!cardDetails.name || !/^[a-zA-Z\s'-]{3,}$/.test(cardDetails.name)) {
+      newErrors.name = 'Enter a valid name (letters only)';
     }
 
-    if (!cardDetails.cvv || !/^\d{3}$/.test(cardDetails.cvv)) {
-      newErrors.cvv = 'Invalid CVV';
+    if (!cardDetails.cvv || !/^\d{3,4}$/.test(cardDetails.cvv)) {
+      newErrors.cvv = 'CVV must be 3 or 4 digits';
     }
 
-    if (!selectedMonth || !selectedYear) {
+    const month = parseInt(selectedMonth);
+    const year = parseInt(selectedYear);
+
+    if (!month || !year) {
       newErrors.expiry = 'Select valid expiry date';
     } else {
-      const expDate = new Date(`${selectedYear}-${selectedMonth}-01`);
+      const expDate = new Date(year, month - 1, 1);
       const now = new Date();
-      expDate.setMonth(expDate.getMonth() + 1); // end of month
-      if (expDate < now) {
+      if (expDate < new Date(now.getFullYear(), now.getMonth(), 1)) {
         newErrors.expiry = 'Card has expired';
       }
     }
@@ -82,11 +88,12 @@ const CreditCardForm = ({
           <Form.Control 
             type="text"
             inputMode="numeric"
-            maxLength={16}
             placeholder="XXXX XXXX XXXX XXXX"
             value={cardDetails.number}
+            maxLength={19}
             onChange={(e) => {
-              const val = e.target.value.replace(/\D/g, ''); // Keep only digits
+              let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+              val = val.replace(/(.{4})/g, '$1 ').trim();
               setCardDetails({ ...cardDetails, number: val });
             }}
             isInvalid={!!errors.number}
@@ -115,13 +122,13 @@ const CreditCardForm = ({
           <Form.Control 
             type="text"
             inputMode="numeric"
-            maxLength={3}
+            maxLength={4}
             placeholder="XXX"
             className="me-2"
             style={{ width: '100px' }}
             value={cardDetails.cvv}
             onChange={(e) => {
-              const val = e.target.value.replace(/\D/g, '');
+              const val = e.target.value.replace(/\D/g, '').substring(0, 4);
               setCardDetails({ ...cardDetails, cvv: val });
             }}
             isInvalid={!!errors.cvv}

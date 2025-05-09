@@ -1,19 +1,42 @@
+
+
+
+
+// import React from 'react'
+// import { BrowserRouter, Route, Routes } from 'react-router-dom'
+// import RazorpayLanding from './components/mainPage/mainInterface'
+// import JasvikPay from './components/signUpPage/signUpPage'
+
+// function App() {
+//   return (
+//     <div>
+//       <BrowserRouter>
+//       <Routes>
+
+//         <Route path="/" element={<RazorpayLanding /> } />
+//         <Route  path="/sign" element={ <JasvikPay/>}/>
+//       </Routes>
+//       </BrowserRouter>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
 import React from 'react'
-import JaisvikPaymentGateway from './components/jaisvikPaymentGateway/jaisvikPaymentGateWay'
-import RazorpayHomepage from './components/mainPage/mainInterface'
-import RazorpayLanding from './components/mainPage/mainInterface'
-import LoginPage from './components/loginPage/loginPage'
-import SignUpPage from './components/signUpPage/signUpPage'
+
+// import PaymentSolutionsApp from './components/Feature1/Feature'
+// import PaymentFeatures from './components/Feature1/Feature'
+import RazorpayLanding from './components/MainInterFace/mainInterface'
+import FooterLinks from './components/PaymentFeatures/Resources'
 
 function App() {
   return (
     <div>
-      {/* <JaisvikPaymentGateway /> */}
-      {/* <RazorpayHomepage /> */}
-      {/* <RazorpayLanding /> */}
-      {/* <LoginPage /> */}
-      <SignUpPage /> 
-      
+      {/* <PaymentFeatures /> */}
+      <RazorpayLanding />
+      {/* <FooterLinks /> */}
     </div>
   )
 }

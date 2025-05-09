@@ -12,7 +12,7 @@ import NetBankingForm from '../netBanking/netBanking';
 import PaymentFooter from '../payFooter/payFooter';
 
 const JaisvikPaymentGateway = ({ amount = "106.00", transactionId = "38" }) => {
-  const [selectedOption, setSelectedOption] = useState('Credit Card');
+  const [selectedOption, setSelectedOption] = useState('');
   const [upiId, setUpiId] = useState('');
   const [userUpi, setUserUpi] = useState('');
   const [bank, setBank] = useState('');
@@ -22,6 +22,18 @@ const JaisvikPaymentGateway = ({ amount = "106.00", transactionId = "38" }) => {
   const [selectedYear, setSelectedYear] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [paymentAmount] = useState(amount);
+  console.log(selectedOption) 
+  console.log(upiId)
+  console.log(userUpi)
+  console.log(bank)
+  console.log(bank)
+  console.log(cardDetails) 
+  console.log(message)
+  console.log(selectedMonth)
+  console.log(selectedYear)
+  console.log(selectedYear)
+  console.log(showAlert)
+  console.log(paymentAmount)
 
   const primaryColor = '#0078BE';
 
@@ -126,17 +138,17 @@ const JaisvikPaymentGateway = ({ amount = "106.00", transactionId = "38" }) => {
                 </Alert>
               )}
 
-              <div className="text-center mt-5">
+              {/* <div className="text-center mt-5">
                 <small className="d-block text-primary mb-2">
                   Note: In the next step you will be redirected to your bank's website to verify yourself.
                 </small>
                 <div>or Go back to <a href="#">www.example.com</a></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
         {/* Footer */}
-        <PaymentFooter />
+        {/* <PaymentFooter /> */}
       </div> 
     </div>
   );
